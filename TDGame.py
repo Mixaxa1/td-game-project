@@ -37,7 +37,7 @@ class Game:
         while self.running:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
-                    running = False
+                    self.running = False
 
             self.screen.fill(pg.Color(0, 0, 0))
             self.board.draw(self.screen)
