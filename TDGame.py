@@ -32,7 +32,6 @@ class Game:
                  ['g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g']]
 
         width, height = len(field), len(field[0])
-
         self.board = Board(width, height, field)
 
     def start(self):

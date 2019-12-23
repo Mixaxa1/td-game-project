@@ -22,8 +22,7 @@ class Board:
                 if field[row][col] == 'g':
                     self.grass.append(GrassTile(col, row, (self.tiles_group,), 50, 50))
                 if field[row][col] == 's':
-                    self.grass.append(SandTile(col, row, (self.tiles_group,), 50, 50))
-
+                    self.sand.append(SandTile(col, row, (self.tiles_group,), 50, 50))
 
     def draw(self, screen):
         self.tiles_group.draw(screen)
