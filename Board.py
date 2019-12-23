@@ -1,12 +1,10 @@
-from Tile import Tile
+from Tile import GrassTile, SandTile
 from utils import load_image
 import pygame as pg
 
 
 class Board:
     def __init__(self, width, height, field):
-        self.grass_image = load_image('images/grass1.jpg')
-
         self.width = width
         self.height = height
         self.field = [row.copy() for row in field]
@@ -22,7 +20,9 @@ class Board:
         for row in range(len(field)):
             for col in range(len(field[row])):
                 if field[row][col] == 'g':
-                    self.grass.append(Tile(self.grass_image, col, row, (self.tiles_group,), 50, 50))
+                    self.grass.append(GrassTile(col, row, (self.tiles_group,), 50, 50))
+                if field[row][col] == 's':
+                    self.grass.append(SandTile(col, row, (self.tiles_group,), 50, 50))
 
 
     def draw(self, screen):
