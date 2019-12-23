@@ -1,6 +1,5 @@
 from Tile import GrassTile, SandTile
 from buildings import TowerTest
-from utils import load_image
 import pygame as pg
 
 
