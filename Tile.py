@@ -25,7 +25,7 @@ class GrassTile(Tile):
         self.image = load_image('images/grass1.jpg')
         super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)
 
-        self.tower_built = False
+        self.built_up = False
 
 
 class SandTile(Tile):
@@ -37,5 +37,5 @@ class SandTile(Tile):
         self.image = load_image('images/sand3.jpg')
         super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)
 
-        self.trap_built = False
+        self.built_up = False
         self.enemy_on_tile = False
