@@ -26,7 +26,7 @@ class Game:
                  ['g', 's', 's', 'g', 's', 's', 'g', 'g', 'g', 'g'],
                  ['g', 'g', 's', 'g', 'g', 's', 'g', 't1', 'g', 'g'],
                  ['g', 't1', 's', 'g', 'g', 's', 'g', 's', 's', 's'],
-                 ['s', 's', 's', 'g', 'g', 's', 'g', 's', 'g', 'g'],
+                 ['e', 's', 's', 'g', 'g', 's', 'g', 's', 'g', 'g'],
                  ['g', 'g', 'g', 'g', 'g', 's', 's', 's', 'g', 'g'],
                  ['g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g'],
                  ['g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g']]
@@ -44,7 +44,7 @@ class Game:
                 if event.type == pg.QUIT:
                     self.running = False
 
-            self.screen.fill(pg.Color(0, 0, 0))
+            self.screen.fill((0, 0, 0))
             self.board.draw(self.screen)
 
             pg.display.flip()

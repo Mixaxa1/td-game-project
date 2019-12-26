@@ -2,6 +2,7 @@ import pygame as pg
 
 from Tile import GrassTile, SandTile
 from buildings import TowerTest
+from enemies import EnemyTest
 
 
 class Board:
@@ -11,6 +12,7 @@ class Board:
         self.field = [row.copy() for row in field]
 
         self.tiles_group = pg.sprite.Group()
+        self.enemies_group = pg.sprite.Group()
 
         self.grass = []
         self.sand = []
@@ -28,6 +30,8 @@ class Board:
                     self.add_grass((col, row))
                     tower = TowerTest(col, row, (self.tiles_group,), 50, 50)
                     self.add_tower(tower, [col, row])
+                if field[row][col] == 'e':
+                    self.add_enemy(EnemyTest(5, 5, col, row, self.enemies_group))
 
     def add_grass(self, cords):
         col, row = cords
@@ -57,9 +61,8 @@ class Board:
         else:
             print('Это место уже занято или не пригодно для строительсва ловушки')
 
-    def add_enemy(self, enemy, cords):
+    def add_enemy(self, enemy):
         self.enemies.append(enemy)
-        self.enemy.cord = cords
 
     def draw(self, screen):
         self.tiles_group.draw(screen)

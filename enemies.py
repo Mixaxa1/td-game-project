@@ -3,11 +3,9 @@ from utils import load_image
 
 
 class Enemy(pg.sprite.Sprite):
-    image = load_image('images/enemy1.png', -1)
-
-    def __init__(self, atk, hp, x1, y1,  *groups):
+    def __init__(self, image, atk, hp, x1, y1, *groups):
         super().__init__(*groups)
-        self.image = Enemy.image
+        self.image = image
         self.rect = self.image.get_rect()
         self.attack_points, self.health_points = atk, hp
         self.rect.left, self.rect.top = x1, y1
@@ -18,3 +16,8 @@ class Enemy(pg.sprite.Sprite):
 
     def attack(self, target):
         target.hp -= self.attack_points
+
+
+class EnemyTest(Enemy):
+    def __init__(self, atk, hp, x1, y1, *groups):
+        super().__init__(load_image('images/enemy1.png'), atk, hp, x1, y1, *groups)
