@@ -6,7 +6,7 @@ from TDGame import Game
 pygame.init()
 
 width = 500
-height = 500
+height = 550
 
 
 def terminate():
