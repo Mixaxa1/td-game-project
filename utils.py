@@ -1,8 +1,9 @@
 import pygame as pg
 
 
-def load_image(filename, colorkey=None):
+def load_image(filename, size, colorkey=None):
     image = pg.image.load(filename).convert()
+    image = pg.transform.scale(image, size)
 
     if colorkey is not None:
         if colorkey == -1:

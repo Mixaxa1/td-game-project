@@ -22,7 +22,7 @@ class GrassTile(Tile):
     for_enemies = False
 
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
-        self.image = load_image('images/grass1.jpg')
+        self.image = load_image('images/grass1.jpg', (50, 50))
         super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)
 
         self.built_up = False
@@ -34,7 +34,7 @@ class SandTile(Tile):
     for_enemies = True
 
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
-        self.image = load_image('images/sand3.jpg')
+        self.image = load_image('images/sand3.jpg', (50, 50))
         super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)
 
         self.built_up = False

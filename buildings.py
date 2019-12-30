@@ -18,10 +18,10 @@ class Buildings(pg.sprite.Sprite):
 
 class Towers(Buildings):
     def __init__(self, image, pos_x, pos_y, groups, tile_width, tile_height):
-        super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)
+        super().__init__(image, pos_x, pos_y, groups, tile_width, tile_height)
 
 
 class TowerTest(Towers):
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
-        self.image = load_image('images/tower1.jpg', -1)
+        self.image = load_image('images/tower1.jpg', (50, 50), -1)
         super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)

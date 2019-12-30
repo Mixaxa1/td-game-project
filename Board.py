@@ -31,8 +31,6 @@ class Board:
                     tower = TowerTest(col, row, (self.tiles_group,), 50, 50)
                     self.add_tower(tower, [col, row])
 
-        print(1)
-
     def add_grass(self, cords):
         col, row = cords
         tile = GrassTile(col, row, (self.tiles_group,), 50, 50)
