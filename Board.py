@@ -1,7 +1,7 @@
 import pygame as pg
 
 from Tile import GrassTile, SandTile
-from buildings import TowerTest
+from buildings import TowerTest, buildings_factory
 
 
 class Board:
@@ -13,6 +13,7 @@ class Board:
         self.surface = pg.Surface((500, 500))
 
         self.tiles_group = pg.sprite.Group()
+        self.buildings_group = pg.sprite.Group()
 
         self.grass = []
         self.sand = []
@@ -28,7 +29,7 @@ class Board:
                     self.add_sand((col, row))
                 if field[row][col] == 't1':
                     self.add_grass((col, row))
-                    tower = TowerTest(col, row, (self.tiles_group,), 50, 50)
+                    tower = TowerTest(col, row, (self.buildings_group,), 50, 50)
                     self.add_tower(tower, [col, row])
 
     def add_grass(self, cords):
@@ -44,6 +45,9 @@ class Board:
         self.sand.append(tile)
 
     def add_tower(self, tower, cords):
+        if type(tower) == str:
+            tower = buildings_factory(tower, cords[0], cords[1], (self.buildings_group,), 50, 50)
+
         col, row = cords
         if self.field[row][col].for_towers and not self.field[row][col].built_up:
             self.buildings.append(tower)
@@ -65,3 +69,4 @@ class Board:
 
     def draw(self, surface):
         self.tiles_group.draw(surface)
+        self.buildings_group.draw(surface)
