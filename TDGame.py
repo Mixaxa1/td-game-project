@@ -18,7 +18,8 @@ class Game:
 
         self.screen = pg.display.set_mode((screen_width, screen_height))
         self.running = False
-        self.pause = False
+        self.pause = True
+        self.speed_up = False
 
         self.board_surface = pg.Surface((500, 500))
         self.gui_surface = pg.Surface((500, 50))
@@ -50,6 +51,12 @@ class Game:
         else:
             self.pause = True
 
+    def speed_up_on_off(self):
+        if self.speed_up:
+            self.speed_up = False
+        else:
+            self.speed_up = True
+
     def run(self):
         self.gui = Gui()
 
@@ -67,10 +74,11 @@ class Game:
                                 if btn.name == 'menu':
                                     self.gui.open_menu()
                                 elif btn.name == 'pause':
+                                    self.pause_continue()
                                     self.gui.change_pause_image()
 
-                                elif btn.name == 'speed_increase':
-                                    pass
+                                elif btn.name == 'speed_up':
+                                    self.speed_up_on_off()
 
                     if btn in self.gui.buildings_buttons or btn == self.gui.translucent_button:
                         if event.type == pg.MOUSEMOTION:
@@ -102,7 +110,9 @@ class Game:
 
                             elif self.gui.translucent_button:
                                 self.gui.translucent_button = None
-                                print(2)
+
+            if not self.pause:
+                pass
 
             self.screen.fill(pg.Color(0, 0, 0))
 

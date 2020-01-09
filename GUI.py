@@ -7,7 +7,7 @@ class Gui:
     def __init__(self):
         self.system_buttons = [Button('menu', 'images/gear.png', [10, 10]),
                                Button('pause', 'images/continue.png', [60, 10]),
-                               Button('speed_increase', 'images/speed_increase.png', [110, 10])]
+                               Button('speed_up', 'images/speed_increase.png', [110, 10])]
         self.buildings_buttons = [Button('tower1', 'images/tower1.jpg', [210, 10]),
                                   Button('tower2', 'images/tower2.jpg', [260, 10])]
         self.translucent_button = None
