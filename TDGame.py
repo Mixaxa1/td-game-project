@@ -28,13 +28,13 @@ class Game:
 
     def load_level(self):
         field = [['g', 'g', 'g', 'g', 't1', 'g', 'g', 'g', 'g', 'g'],
-                 ['g', 's', 's', 's', 's', 'g', 'g', 'g', 'g', 'g'],
+                 ['g', 'sb', 's', 's', 'sb', 'g', 'g', 'g', 'g', 'g'],
                  ['g', 's', 'g', 'g', 's', 'g', 'g', 'g', 'g', 'g'],
-                 ['g', 's', 's', 'g', 's', 's', 'g', 'g', 'g', 'g'],
+                 ['g', 'sb', 'sb', 'g', 'sb', 'sb', 'g', 'g', 'g', 'g'],
                  ['g', 'g', 's', 'g', 'g', 's', 'g', 't1', 'g', 'g'],
-                 ['g', 't1', 's', 'g', 'g', 's', 'g', 's', 's', 's'],
-                 ['s', 's', 's', 'g', 'g', 's', 'g', 's', 'g', 'g'],
-                 ['g', 'g', 'g', 'g', 'g', 's', 's', 's', 'g', 'g'],
+                 ['g', 't1', 's', 'g', 'g', 's', 'g', 'sb', 's', 'sb'],
+                 ['e', 's', 'sb', 'g', 'g', 's', 'g', 's', 'g', 'g'],
+                 ['g', 'g', 'g', 'g', 'g', 'sb', 's', 'sb', 'g', 'g'],
                  ['g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g'],
                  ['g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g']]
 
@@ -112,7 +112,9 @@ class Game:
                                 self.gui.translucent_button = None
 
             if not self.pause:
-                pass
+                for enemy in self.board.enemies:
+                    if not enemy.on_finish:
+                        enemy.step()
 
             self.screen.fill(pg.Color(0, 0, 0))
 
