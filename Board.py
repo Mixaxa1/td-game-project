@@ -49,7 +49,8 @@ class Board:
             tower = buildings_factory(tower, cords[0], cords[1], (self.buildings_group,), 50, 50)
 
         col, row = cords
-        if self.field[row][col].for_towers and not self.field[row][col].built_up:
+        if self.field[row][col].for_towers and not self.field[row][col].built_up and type(tower) == str:
+            tower = buildings_factory(tower, cords[0], cords[1], (self.buildings_group,), 50, 50)
             self.buildings.append(tower)
             self.field[row][col].built_up = True
         else:
