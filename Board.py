@@ -45,9 +45,6 @@ class Board:
         self.sand.append(tile)
 
     def add_tower(self, tower, cords):
-        if type(tower) == str:
-            tower = buildings_factory(tower, cords[0], cords[1], (self.buildings_group,), 50, 50)
-
         col, row = cords
         if self.field[row][col].for_towers and not self.field[row][col].built_up and type(tower) == str:
             tower = buildings_factory(tower, cords[0], cords[1], (self.buildings_group,), 50, 50)
