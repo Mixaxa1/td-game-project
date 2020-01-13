@@ -22,6 +22,7 @@ class Game:
         self.speed_up = False
 
         self.hp = 100
+        self.wave = []
 
         self.board_surface = pg.Surface((500, 500))
         self.gui_surface = pg.Surface((500, 50))
