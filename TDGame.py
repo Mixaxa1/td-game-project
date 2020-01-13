@@ -7,7 +7,7 @@ from GUI import Gui
 import buildings
 
 pg.init()
-size = width, height = 500, 550
+size = width, height = 500, 400
 screen = pg.display.set_mode(size)
 
 
@@ -20,6 +20,8 @@ class Game:
         self.running = False
         self.pause = True
         self.speed_up = False
+
+        self.hp = 100
 
         self.board_surface = pg.Surface((500, 500))
         self.gui_surface = pg.Surface((500, 50))
@@ -56,6 +58,14 @@ class Game:
             self.speed_up = False
         else:
             self.speed_up = True
+
+    def on_finish(self, enemy):
+        # if self.board.base.pos_x + 50 >= enemy.pos_x + 15 >= self.board.base.pos_x and \
+        #         self.board.base.pos_y + 50 >= enemy.pos_x + 15 >= self.board.base.pos_y:
+        # закоментировано до добавления базы
+        if 500 >= enemy.pos_x + 15 >= 450 and 300 >= enemy.pos_y + 15 >= 250:
+            return True
+        return False
 
     def run(self):
         self.gui = Gui()
@@ -113,15 +123,19 @@ class Game:
 
             if not self.pause:
                 for enemy in self.board.enemies:
-                    if not enemy.on_finish:
+                    if not self.on_finish(enemy):
                         enemy.step()
+                    else:
+                        self.hp -= enemy.dmg
+                        self.board.enemies.remove(enemy)
+                        self.board.kill_enemy(enemy)
 
             self.screen.fill(pg.Color(0, 0, 0))
 
             self.board.draw(self.board_surface)
             self.screen.blit(self.board_surface, (0, 50))
 
-            self.gui.draw(self.gui_surface)
+            self.gui.draw(self.gui_surface, self.hp)
             self.screen.blit(self.gui_surface, (0, 0))
 
             if self.gui.translucent_button:

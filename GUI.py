@@ -14,7 +14,9 @@ class Gui:
         self.update_all_buttons()
         self.buttons_size = (30, 30)
 
-    def draw(self, surface):
+        self.hp_font = pg.font.SysFont(None, 30)
+
+    def draw(self, surface, hp):
         surface.fill(pg.Color('gray'))
 
         self.update_all_buttons()
@@ -22,6 +24,15 @@ class Gui:
         for btn in self.all_buttons:
             image = load_image(btn.image, self.buttons_size, -1)
             surface.blit(image, (btn.cord_x, btn.cord_y))
+
+        self.draw_hp(surface, hp)
+
+    def draw_hp(self, surface, hp):
+        heart_image = load_image('images/heart.png', (20, 20), -1)
+        surface.blit(heart_image, (457, 10))
+
+        hp_text = self.hp_font.render(str(hp), 0, pg.color.Color('black'))
+        surface.blit(hp_text, (450, 30))
 
     def draw_translucent_button(self, screen):
         image = load_image(self.translucent_button.image, self.buttons_size, -1)

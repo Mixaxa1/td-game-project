@@ -2,7 +2,7 @@ import pygame as pg
 
 from Tile import GrassTile, SandTile
 from buildings import TowerTest, buildings_factory
-from enemies import EnemyTest
+from enemies import Goblin
 
 
 class Board:
@@ -45,7 +45,7 @@ class Board:
             for col in range(len(field[row])):
                 if field[row][col] == 'e':
                     self.add_sand((col, row))
-                    enemy = EnemyTest(col * 50 + 10, row * 50 + 10, self.path, self.enemies_group)
+                    enemy = Goblin(col * 50 + 10, row * 50 + 10, self.path, self.enemies_group)
                     self.add_enemy(enemy)
 
     def add_grass(self, cords):
@@ -62,7 +62,7 @@ class Board:
 
     def add_tower(self, tower, cords):
         col, row = cords
-        if self.field[row][col].for_towers and not self.field[row][col].built_up and type(tower) == str:
+        if self.field[row][col].for_towers and not self.field[row][col].built_up:
             tower = buildings_factory(tower, cords[0], cords[1], (self.buildings_group,), 50, 50)
             self.buildings.append(tower)
             self.field[row][col].built_up = True
@@ -79,6 +79,9 @@ class Board:
 
     def add_enemy(self, enemy):
         self.enemies.append(enemy)
+
+    def kill_enemy(self, enemy):
+        enemy.kill()
 
     def draw(self, surface):
         self.tiles_group.draw(surface)

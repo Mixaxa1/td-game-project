@@ -1,3 +1,5 @@
+import random
+
 import pygame as pg
 from utils import load_image
 
@@ -47,9 +49,73 @@ class Enemy(pg.sprite.Sprite):
         self.rect.y = self.pos_y
 
 
-class EnemyTest(Enemy):
+class Goblin(Enemy):
+    cost = 1
+
     def __init__(self, x1, y1, path, groups):
-        self.image = load_image('images/enemy1.png', (30, 30), -1)
+        self.image = load_image('images/goblin.png', (30, 30), -1)
+        self.hp = 5
+        self.dmg = 1
+        self.speed = 2
+        super().__init__(self.image, x1, y1, path, groups)
+
+
+class Hobgoblin(Enemy):
+    cost = 2
+
+    def __init__(self, x1, y1, path, groups):
+        self.image = load_image('images/hobgoblin.png', (30, 30), -1)
+        self.hp = 15
+        self.dmg = 1
+        self.speed = 1.5
+        super().__init__(self.image, x1, y1, path, groups)
+
+
+class Mercenary(Enemy):
+    cost = 5
+
+    def __init__(self, x1, y1, path, groups):
+        self.image = load_image('images/mercenary.png', (30, 30), -1)
         self.hp = 20
+        self.dmg = 2
+        self.speed = 1.5
+        super().__init__(self.image, x1, y1, path, groups)
+
+
+class Orc(Enemy):
+    cost = 10
+
+    def __init__(self, x1, y1, path, groups):
+        self.image = load_image('images/orc.png', (30, 30), -1)
+        self.hp = 45
+        self.dmg = 5
         self.speed = 1
         super().__init__(self.image, x1, y1, path, groups)
+
+
+class Wizard(Enemy):
+    cost = 30
+
+    def __init__(self, x1, y1, path, groups):
+        self.image = load_image('images/wizard.png', (30, 30), -1)
+        self.hp = 70
+        self.dmg = 10
+        self.speed = 1.5
+        super().__init__(self.image, x1, y1, path, groups)
+
+
+def create_wave(difficulty):
+    possible_enemies = [Goblin, Hobgoblin, Mercenary, Orc, Wizard]
+    possible_enemies = [possible_enemies[i] for i in len(possible_enemies) if i + 1 <= difficulty]
+
+    budget = difficulty * 10
+    wave = []
+
+    while budget != 0:
+        enemy = random.choice(possible_enemies)
+
+        if enemy.cost <= budget:
+            budget -= enemy.cost
+            wave.append(enemy)
+
+    return wave
