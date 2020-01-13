@@ -7,7 +7,7 @@ from GUI import Gui
 import buildings
 
 pg.init()
-size = width, height = 500, 550
+size = width, height = 500, 400
 screen = pg.display.set_mode(size)
 
 
