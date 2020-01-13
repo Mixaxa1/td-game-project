@@ -22,7 +22,7 @@ class Game:
         self.speed_up = False
 
         self.hp = 100
-        self.wave = []
+        self.difficulty = 1
 
         self.board_surface = pg.Surface((500, 500))
         self.gui_surface = pg.Surface((500, 50))
@@ -36,7 +36,7 @@ class Game:
                  ['g', 'sb', 'sb', 'g', 'sb', 'sb', 'g', 'g', 'g', 'g'],
                  ['g', 'g', 's', 'g', 'g', 's', 'g', 't1', 'g', 'g'],
                  ['g', 't1', 's', 'g', 'g', 's', 'g', 'sb', 's', 'sb'],
-                 ['e', 's', 'sb', 'g', 'g', 's', 'g', 's', 'g', 'g'],
+                 ['s', 's', 'sb', 'g', 'g', 's', 'g', 's', 'g', 'g'],
                  ['g', 'g', 'g', 'g', 'g', 'sb', 's', 'sb', 'g', 'g'],
                  ['g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g'],
                  ['g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g']]
@@ -130,6 +130,10 @@ class Game:
                         self.hp -= enemy.dmg
                         self.board.enemies.remove(enemy)
                         self.board.kill_enemy(enemy)
+
+                if not self.board.enemies:
+                    self.board.start_new_wave(self.difficulty)
+                    self.difficulty += 1
 
             self.screen.fill(pg.Color(0, 0, 0))
 

@@ -13,10 +13,14 @@ class Enemy(pg.sprite.Sprite):
         self.pos_y = pos_y
         self.path = path
 
+        self.x_count = 0
+        self.y_count = 0
         self.on_finish = False
 
+        self.create_time = 0
+        self.delay = 0
+
         self.rect = self.image.get_rect().move(self.pos_x, self.pos_y)
-        self.find_target_location()
 
     def find_target_location(self):
         if not self.path:
@@ -56,7 +60,7 @@ class Goblin(Enemy):
         self.image = load_image('images/goblin.png', (30, 30), -1)
         self.hp = 5
         self.dmg = 1
-        self.speed = 2
+        self.speed = 1
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
 
@@ -67,7 +71,7 @@ class Hobgoblin(Enemy):
         self.image = load_image('images/hobgoblin.png', (30, 30), -1)
         self.hp = 15
         self.dmg = 1
-        self.speed = 1.5
+        self.speed = 1
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
 
@@ -78,7 +82,7 @@ class Mercenary(Enemy):
         self.image = load_image('images/mercenary.png', (30, 30), -1)
         self.hp = 20
         self.dmg = 2
-        self.speed = 1.5
+        self.speed = 1
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
 
@@ -100,13 +104,15 @@ class Wizard(Enemy):
         self.image = load_image('images/wizard.png', (30, 30), -1)
         self.hp = 70
         self.dmg = 10
-        self.speed = 1.5
+        self.speed = 1
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
 
-def create_wave(difficulty, ):
-    possible_enemies = [Goblin, Hobgoblin, Mercenary, Orc, Wizard]
-    possible_enemies = [possible_enemies[i] for i in len(possible_enemies) if i + 1 <= difficulty]
+def create_wave(difficulty, start, path, groups):
+    start = start[0] + 10, start[1] + 10
+    possible_enemies = [Goblin(*start, path, groups), Hobgoblin(*start, path, groups),
+                        Mercenary(*start, path, groups), Orc(*start, path, groups), Wizard(*start, path, groups)]
+    possible_enemies = [possible_enemies[i] for i in range(len(possible_enemies)) if i <= difficulty - 1]
 
     budget = difficulty * 10
     wave = []
