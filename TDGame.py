@@ -1,3 +1,4 @@
+import os
 import sys
 
 import pygame as pg
@@ -21,7 +22,7 @@ class Game:
         self.pause = True
         self.speed_up = False
 
-        self.hp = 100
+        self.hp = 1
 
         self.board_surface = pg.Surface((500, 500))
         self.gui_surface = pg.Surface((500, 50))
@@ -141,7 +142,19 @@ class Game:
             if self.gui.translucent_button:
                 self.gui.draw_translucent_button(self.screen)
 
+            if self.hp == 0:
+                self.game_over()
+
             pg.display.flip()
+
+    def game_over(self):
+        print('The game is over, would you like to restart?')
+        answer = input().lower().strip()
+        if answer == 'yes':
+            os.system('python restart.py')
+            self.terminate()
+        else:
+            self.terminate()
 
     def terminate(self):
         pg.quit()
