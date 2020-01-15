@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/TD.iml" filepath="$PROJECT_DIR$/.idea/TD.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/td-game-project.iml" filepath="$PROJECT_DIR$/.idea/td-game-project.iml" />
     </modules>
   </component>

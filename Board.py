@@ -2,7 +2,7 @@ import pygame as pg
 
 from Tile import GrassTile, SandTile
 from buildings import TowerTest, buildings_factory
-from enemies import Goblin
+from enemies import Goblin, create_wave
 
 
 class Board:
@@ -19,7 +19,6 @@ class Board:
 
         self.grass = []
         self.sand = []
-
         self.enemies = []
         self.buildings = []
 
@@ -27,16 +26,17 @@ class Board:
             for col in range(len(field[row])):
                 if field[row][col] == 'g':
                     self.add_grass((col, row))
-                if field[row][col] == 's':
+                elif field[row][col] == 's':
                     self.add_sand((col, row))
-                if field[row][col] == 'sb':
+                elif field[row][col] == 'sb':
                     self.add_sand((col, row))
                 #    self.path.append(self.field[row][col])
-                if field[row][col] == 't1':
+                elif field[row][col] == 't1':
                     self.add_grass((col, row))
                     tower = TowerTest(col, row, (self.buildings_group,), 50, 50)
                     self.add_tower(tower, [col, row])
 
+        self.start = self.field[6][0].pos_x, self.field[6][0].pos_y
         self.path = [self.field[6][2], self.field[3][2], self.field[3][1], self.field[1][1], self.field[1][4],
                      self.field[3][4], self.field[3][5], self.field[7][5], self.field[7][7], self.field[5][7],
                      self.field[5][9]]
@@ -79,6 +79,9 @@ class Board:
 
     def add_enemy(self, enemy):
         self.enemies.append(enemy)
+
+    def start_new_wave(self, difficulty):
+        self.enemies = create_wave(difficulty, self.start, self.path, self.enemies_group)
 
     def kill_enemy(self, enemy):
         enemy.kill()
