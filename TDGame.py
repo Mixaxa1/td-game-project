@@ -5,11 +5,23 @@ import pygame as pg
 
 from Board import Board
 from GUI import Gui
+from utils import load_image
 import buildings
 
 pg.init()
 size = width, height = 500, 400
 screen = pg.display.set_mode(size)
+
+
+class GameOver(pg.sprite.Sprite):
+    image_to_draw = load_image('images/gameover.png', (500, 550))
+
+    def __init__(self, group):
+        super().__init__(group)
+        self.image = GameOver.image_to_draw
+        self.rect = self.image_to_draw.get_rect()
+        self.rect.x = -500
+        self.rect.y = 0
 
 
 class Game:
@@ -22,7 +34,7 @@ class Game:
         self.pause = True
         self.speed_up = False
 
-        self.hp = 1
+        self.hp = 100
 
         self.board_surface = pg.Surface((500, 500))
         self.gui_surface = pg.Surface((500, 50))
@@ -148,6 +160,14 @@ class Game:
             pg.display.flip()
 
     def game_over(self):
+        clock = pg.time.Clock()
+        tmp_group = pg.sprite.Group()
+        gameover = GameOver(tmp_group)
+        while gameover.rect.x != 0:
+            gameover.rect.x += 2
+            tmp_group.draw(self.screen)
+            pg.display.flip()
+            clock.tick(50)
         print('The game is over, would you like to restart?')
         answer = input().lower().strip()
         if answer == 'yes':
