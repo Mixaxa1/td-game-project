@@ -66,7 +66,7 @@ class Game:
 
     def open_menu(self):
         self.menu_open = True
-        self.gui.draw_menu(screen)
+        self.gui.draw_menu(self.menu_surface, screen)
 
     def pause_continue(self):
         if self.pause:
@@ -98,50 +98,53 @@ class Game:
                 if event.type == pg.QUIT:
                     self.running = False
 
-                if not self.menu_open:
-                    for btn in self.gui.all_buttons:
-                        btn_cords = [btn.cord_x, btn.cord_y]
+                for btn in self.gui.buttons + self.gui.menu_buttons:
+                    btn_cords = [btn.cord_x, btn.cord_y]
 
-                        if event.type == pg.MOUSEBUTTONUP:
-                            if event.button == 1:
-                                if self.gui.in_button_area(btn_cords, event):
-                                    if btn.name == 'menu':
-                                        self.open_menu()
-                                    elif btn.name == 'pause':
-                                        self.pause_continue()
-                                    elif btn.name == 'speed_up':
-                                        self.speed_up_on_off()
+                    if event.type == pg.MOUSEBUTTONUP:
+                        if event.button == 1:
+                            if self.gui.in_button_area(btn, event):
+                                if btn.name == 'menu' and not self.menu_open:
+                                    self.open_menu()
+                                elif btn.name == 'pause' and not self.menu_open:
+                                    self.pause_continue()
+                                elif btn.name == 'speed_up' and not self.menu_open:
+                                    self.speed_up_on_off()
+                                elif btn.name == 'Продолжить':
+                                    self.menu_open = False
+                                elif btn.name == 'Выход':
+                                    self.terminate()
 
-                        if btn in self.gui.buildings_buttons or btn == self.gui.translucent_button:
-                            if event.type == pg.MOUSEMOTION:
-                                if event.buttons[0] == 1:
-                                    if self.gui.in_button_area(btn_cords, event):
-                                        if not self.gui.translucent_button:
-                                            self.gui.create_translucent_button(btn)
-                                            btn = self.gui.translucent_button
-                                            btn_cords = [btn.cord_x, btn.cord_y]
+                    if btn in self.gui.buildings_buttons or btn == self.gui.translucent_button:
+                        if event.type == pg.MOUSEMOTION:
+                            if event.buttons[0] == 1:
+                                if self.gui.in_button_area(btn, event):
+                                    if not self.gui.translucent_button:
+                                        self.gui.create_translucent_button(btn)
+                                        btn = self.gui.translucent_button
+                                        btn_cords = [btn.cord_x, btn.cord_y]
 
-                                    if btn.movable:
-                                        shift = event.rel
-                                        btn.cord_x += shift[0]
-                                        btn.cord_y += shift[1]
+                                if btn.movable:
+                                    shift = event.rel
+                                    btn.cord_x += shift[0]
+                                    btn.cord_y += shift[1]
 
-                            elif event.type == pg.MOUSEBUTTONUP:
-                                if self.gui.translucent_button and \
-                                        0 <= event.pos[0] <= width and 50 <= event.pos[1] <= height:
+                        elif event.type == pg.MOUSEBUTTONUP:
+                            if self.gui.translucent_button and \
+                                    0 <= event.pos[0] <= width and 50 <= event.pos[1] <= height:
 
-                                    tower = self.gui.translucent_button.name[:-5]
+                                tower = self.gui.translucent_button.name[:-5]
 
-                                    tile_cords = list(event.pos)
-                                    tile_cords[1] -= 50
-                                    tile_cords = list(map(lambda num: num // 50, tile_cords))
+                                tile_cords = list(event.pos)
+                                tile_cords[1] -= 50
+                                tile_cords = list(map(lambda num: num // 50, tile_cords))
 
-                                    self.board.add_tower(tower, tile_cords)
+                                self.board.add_tower(tower, tile_cords)
 
-                                    self.gui.translucent_button = None
+                                self.gui.translucent_button = None
 
-                                elif self.gui.translucent_button:
-                                    self.gui.translucent_button = None
+                            elif self.gui.translucent_button:
+                                self.gui.translucent_button = None
 
             if not self.pause:
                 for enemy in self.board.enemies:
@@ -165,8 +168,7 @@ class Game:
             self.screen.blit(self.gui_surface, (0, 0))
 
             if self.menu_open:
-                self.gui.draw_menu(self.menu_surface)
-                self.screen.blit(self.menu_surface, (0, 0))
+                self.gui.draw_menu(self.menu_surface, screen)
 
             if self.gui.translucent_button:
                 self.gui.draw_translucent_button(self.screen)
