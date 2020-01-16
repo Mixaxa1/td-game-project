@@ -31,29 +31,32 @@ class Enemy(pg.sprite.Sprite):
 
             self.path.pop(0)
 
-    def step(self):
+    def step(self, speed_up):
+
         if self.x_count == 0 and self.y_count == 0:
             self.find_target_location()
 
         if self.create_time >= self.delay:
+            if speed_up == 2 and self.x_count == 1 or self.y_count == 1:
+                speed_up = 1
             if self.x_count > 0:
-                self.pos_x += self.speed
-                self.x_count -= 1
+                self.pos_x += self.speed * speed_up
+                self.x_count -= 1 * speed_up
             elif self.x_count < 0:
-                self.pos_x -= self.speed
-                self.x_count += 1
+                self.pos_x -= self.speed * speed_up
+                self.x_count += 1 * speed_up
 
             if self.y_count > 0:
-                self.pos_y += self.speed
-                self.y_count -= 1
+                self.pos_y += self.speed * speed_up
+                self.y_count -= 1 * speed_up
             elif self.y_count < 0:
-                self.pos_y -= self.speed
-                self.y_count += 1
+                self.pos_y -= self.speed * speed_up
+                self.y_count += 1 * speed_up
 
             self.rect.x = self.pos_x
             self.rect.y = self.pos_y
         else:
-            self.create_time += 1
+            self.create_time += 1 * speed_up
 
 
 class Goblin(Enemy):

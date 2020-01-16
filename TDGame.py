@@ -33,8 +33,8 @@ class Game:
 
         self.running = False
         self.pause = True
-        self.speed_up = False
         self.menu_open = False
+        self.speed_up = 1
 
         self.hp = 50
         self.difficulty = 1
@@ -77,10 +77,10 @@ class Game:
         self.gui.change_pause_image()
 
     def speed_up_on_off(self):
-        if self.speed_up:
-            self.speed_up = False
+        if self.speed_up == 1:
+            self.speed_up = 2
         else:
-            self.speed_up = True
+            self.speed_up = 1
 
     def on_finish(self, enemy):
         # if self.board.base.pos_x + 50 >= enemy.pos_x + 15 >= self.board.base.pos_x and \
@@ -149,7 +149,8 @@ class Game:
             if not self.pause:
                 for enemy in self.board.enemies:
                     if not self.on_finish(enemy):
-                        enemy.step()
+                        enemy.step(self.speed_up)
+
                     else:
                         self.hp -= enemy.dmg
                         self.board.enemies.remove(enemy)
