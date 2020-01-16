@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/TD.iml" filepath="$PROJECT_DIR$/.idea/TD.iml" />
+<<<<<<< Updated upstream
       <module fileurl="file://$PROJECT_DIR$/.idea/td-game-project.iml" filepath="$PROJECT_DIR$/.idea/td-game-project.iml" />
+=======
+>>>>>>> Stashed changes
     </modules>
   </component>
 </project>

@@ -5,18 +5,19 @@ from utils import load_image
 
 class Gui:
     def __init__(self):
-        self.system_buttons = [Button('menu', 'images/gear.png', [10, 10]),
-                               Button('pause', 'images/continue.png', [60, 10]),
-                               Button('speed_up', 'images/speed_up.png', [110, 10])]
-        self.buildings_buttons = [Button('tower1', 'images/tower1.jpg', [210, 10]),
-                                  Button('tower2', 'images/tower2.jpg', [260, 10])]
+        self.system_buttons = [Button('menu', [10, 10], 'images/gear.png'),
+                               Button('pause', [60, 10], 'images/continue.png'),
+                               Button('speed_up', [110, 10], 'images/speed_up.png')]
+        self.buildings_buttons = [Button('tower1', [210, 10], 'images/tower1.jpg'),
+                                  Button('tower2', [260, 10], 'images/tower2.jpg')]
+        self.manu_buttons = ['Продолжить', 'Выход']
         self.translucent_button = None
         self.update_all_buttons()
         self.buttons_size = (30, 30)
 
         self.hp_font = pg.font.SysFont(None, 30)
 
-    def draw(self, surface, hp):
+    def draw_gui(self, surface, hp):
         surface.fill(pg.Color('gray'))
 
         self.update_all_buttons()
@@ -38,8 +39,13 @@ class Gui:
         image = load_image(self.translucent_button.image, self.buttons_size, -1)
         screen.blit(image, (self.translucent_button.cord_x, self.translucent_button.cord_y))
 
-    def open_menu(self):
-        print('На этом моменте должно было открытся меню')
+    def draw_menu(self, menu):
+        menu.fill((31, 9, 6))
+        menu.set_alpha(150)
+
+        button = pg.Surface((100, 50))
+        button.fill((255, 9, 6))
+        menu.blit(button, (100, 100))
 
     def change_pause_image(self):
         if self.system_buttons[1].image == 'images/continue.png':
@@ -62,7 +68,7 @@ class Gui:
 
 
 class Button:
-    def __init__(self, name, image, cords, movable=False):
+    def __init__(self, name, cords, image=None, movable=False):
         self.name = name
         self.image = image
         self.cord_x = cords[0]
