@@ -61,6 +61,12 @@ class Gui:
         else:
             self.system_buttons[1].image = 'images/continue.png'
 
+    def change_speed_increase_image(self):
+        if self.system_buttons[2].image == 'images/speed_up.png':
+            self.system_buttons[2].image = 'images/speed_increase.png'
+        else:
+            self.system_buttons[2].image = 'images/speed_up.png'
+
     def create_translucent_button(self, btn):
         self.translucent_button = Button(btn.name + ' copy', (btn.cord_x, btn.cord_y), (30, 30), btn.image, True)
 

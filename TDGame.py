@@ -122,6 +122,8 @@ class Game:
         else:
             self.speed_up = 1
 
+        self.gui.change_speed_increase_image()
+
     def on_finish(self, enemy):
         # if self.board.base.pos_x + 50 >= enemy.pos_x + 15 >= self.board.base.pos_x and \
         #         self.board.base.pos_y + 50 >= enemy.pos_x + 15 >= self.board.base.pos_y:
