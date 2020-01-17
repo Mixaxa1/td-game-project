@@ -35,6 +35,9 @@ class Gui:
         heart_image = load_image('images/heart.png', (20, 20), -1)
         surface.blit(heart_image, (457, 10))
 
+        if hp < 0:
+            hp = 0
+
         hp_text = self.hp_font.render(str(hp), 0, pg.color.Color('black'))
         surface.blit(hp_text, (450, 30))
 
