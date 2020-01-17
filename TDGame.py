@@ -43,7 +43,47 @@ class Game:
         self.gui_surface = pg.Surface((500, 50))
         self.menu_surface = pg.Surface((500, 550))
 
-        self.load_level()
+        self.start_screen()
+
+    def load_image(self, filename='background2.jpg', colorkey=None):
+        filepath = os.path.join(filename)
+        image = pg.image.load(filepath).convert()
+
+        if colorkey is not None:
+            if colorkey == -1:
+                colorkey = image.get_at((0, 0))
+            image.set_colorkey(colorkey)
+        else:
+            image = image.convert_alpha()
+        return image
+
+
+    def start_screen(self):
+        intro_text = ["                          TOWER DEFENSE", "",
+                      "       Нажмите любую клавишу для начала игры"]
+
+        fon = pg.transform.scale(self.load_image('images/background.jpg'), (500, 550))
+        screen.blit(fon, (0, 0))
+        font = pg.font.Font(None, 30)
+        text_coord = 50
+        for line in intro_text:
+            string_rendered = font.render(line, 1, pg.Color('blue'))
+            intro_rect = string_rendered.get_rect()
+            text_coord += 10
+            intro_rect.top = text_coord
+            intro_rect.x = 10
+            text_coord += intro_rect.height
+            screen.blit(string_rendered, intro_rect)
+
+        while True:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    self.terminate()
+                elif event.type == pg.KEYDOWN or event.type == pg.MOUSEBUTTONDOWN:
+                    return
+            pg.display.flip()
+
+            self.load_level()
 
     def load_level(self):
         field = [['g', 'g', 'g', 'g', 't1', 'g', 'g', 'g', 'g', 'g'],
