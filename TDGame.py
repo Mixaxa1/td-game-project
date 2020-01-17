@@ -174,7 +174,7 @@ class Game:
             if self.gui.translucent_button:
                 self.gui.draw_translucent_button(self.screen)
 
-            if self.hp == 0:
+            if self.hp <= 0:
                 self.game_over()
 
             pg.display.flip()
