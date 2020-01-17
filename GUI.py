@@ -8,17 +8,18 @@ class Gui:
         self.system_buttons = [Button('menu', [10, 10], (30, 30), 'images/gear.png'),
                                Button('pause', [60, 10], (30, 30), 'images/continue.png'),
                                Button('speed_up', [110, 10], (30, 30), 'images/speed_up.png')]
-        self.buildings_buttons = [Button('ArcherTower', [210, 10], (30, 30), 'images/ArcherTower.jpg'),
-                                  Button('BallisticTower', [260, 10], (30, 30), 'images/BallisticTower.jpg'),
-                                  Button('MagicTower', [310, 10], (30, 30), 'images/MagicTower.jpg')]
+        self.buildings_buttons = [Button('ArcherTower', [210, 3], (30, 30), 'images/ArcherTower.jpg'),
+                                  Button('BallisticTower', [260, 3], (30, 30), 'images/BallisticTower.jpg'),
+                                  Button('MagicTower', [310, 3], (30, 30), 'images/MagicTower.jpg')]
         self.menu_buttons = [Button('Продолжить', [175, 100], (150, 50)), Button('Выход', [175, 200], (150, 50))]
+        self.prices = [(10, (210, 32)), (15, (260, 32)), (20, (310, 32))]
         self.translucent_button = None
         self.update_buttons()
 
-        self.hp_font = pg.font.SysFont(None, 30)
-        self.buttons_font = pg.font.SysFont(None, 30)
+        self.font = pg.font.SysFont(None, 30)
+        self.prices_font = pg.font.SysFont(None, 30)
 
-    def draw_gui(self, surface, hp):
+    def draw_gui(self, surface, hp, money):
         surface.fill(pg.Color('gray'))
 
         self.update_buttons()
@@ -30,6 +31,8 @@ class Gui:
             surface.blit(image, (btn.cord_x, btn.cord_y))
 
         self.draw_hp(surface, hp)
+        self.draw_money(surface, money)
+        self.draw_prices(surface)
 
     def draw_hp(self, surface, hp):
         heart_image = load_image('images/heart.png', (20, 20), -1)
@@ -38,8 +41,20 @@ class Gui:
         if hp < 0:
             hp = 0
 
-        hp_text = self.hp_font.render(str(hp), 0, pg.color.Color('black'))
+        hp_text = self.font.render(str(hp), 0, pg.color.Color('black'))
         surface.blit(hp_text, (450, 30))
+
+    def draw_money(self, surface, money):
+        money_image = load_image('images/money.png', (20, 20), -1)
+        surface.blit(money_image, (400, 10))
+
+        money_text = self.font.render(str(money), 0, pg.color.Color('black'))
+        surface.blit(money_text, (400, 30))
+
+    def draw_prices(self, surface):
+        for price in self.prices:
+            price_text = self.font.render(str(price[0]), 0, pg.color.Color('black'))
+            surface.blit(price_text, (price[1]))
 
     def draw_translucent_button(self, screen):
         image = load_image(self.translucent_button.image, (30, 30), -1)
@@ -54,7 +69,7 @@ class Gui:
             button = pg.Surface(btn.size)
             button.fill((255, 9, 6))
 
-            button_text = self.hp_font.render(btn.name, 0, pg.color.Color('black'))
+            button_text = self.font.render(btn.name, 0, pg.color.Color('black'))
             button.blit(button_text, (5, 15))
 
             screen.blit(button, (btn.cord_x, btn.cord_y))

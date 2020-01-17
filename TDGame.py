@@ -1,12 +1,13 @@
 import os
 import sys
+import time
 
 import pygame as pg
 
 from Board import Board
 from GUI import Gui
 from utils import load_image
-import buildings
+from buildings import buildings_factory
 
 pg.init()
 size = width, height = 500, 550
@@ -35,9 +36,13 @@ class Game:
         self.pause = True
         self.menu_open = False
         self.speed_up = 1
+        self.pause_start = 0
 
         self.hp = 50
+        self.money = 20
         self.difficulty = 1
+
+        self.tracers = []
 
         self.board_surface = pg.Surface((500, 500))
         self.gui_surface = pg.Surface((500, 50))
@@ -111,8 +116,13 @@ class Game:
     def pause_continue(self):
         if self.pause:
             self.pause = False
+            if self.pause_start != 0:
+                pause_end = time.clock()
+                for tower in self.board.buildings:
+                    tower.time_adjustment = pause_end - self.pause_start
         else:
             self.pause = True
+            self.pause_start = time.clock()
 
         self.gui.change_pause_image()
 
@@ -181,7 +191,13 @@ class Game:
                                 tile_cords[1] -= 50
                                 tile_cords = list(map(lambda num: num // 50, tile_cords))
 
-                                self.board.add_tower(tower, tile_cords)
+                                col, row = tile_cords
+                                tower = buildings_factory(tower, col, row, (), 50, 50)
+                                if self.board.field[row][col].for_towers and not self.board.field[row][col].built_up \
+                                        and self.money >= tower.cost:
+                                    self.money -= tower.cost
+                                    self.board.buildings_group.add(tower)
+                                    self.board.add_tower(tower, tile_cords)
 
                                 self.gui.translucent_button = None
 
@@ -192,17 +208,26 @@ class Game:
                 for tower in self.board.buildings:
                     for enemy in self.board.enemies:
                         if tower.determine_distance(enemy) <= tower.attack_range:
-                            tower.shot(enemy)
+                            if time.clock() - tower.last_shot_time - tower.time_adjustment >= tower.reload_time:
+                                tower.last_shot_time = time.clock()
+                                tower.shot(enemy)
+                                tower.last_shot_time = time.clock()
+                                tower.time_adjustment = 0
+
+                                if enemy.hp <= 0:
+                                    self.money += enemy.reward
+                                    self.board.kill_enemy(enemy)
+
+                                self.tracers.append([(tower.pos_x + 25, tower.pos_y + 75),
+                                                     (enemy.pos_x + 10, enemy.pos_y + 60), 5])
+                                break
 
                 for enemy in self.board.enemies:
-                    if enemy.hp <= 0:
-                        enemy.kill()
-                    elif not self.on_finish(enemy):
+                    if not self.on_finish(enemy):
                         enemy.step(self.speed_up)
 
                     else:
                         self.hp -= enemy.dmg
-                        self.board.enemies.remove(enemy)
                         self.board.kill_enemy(enemy)
 
                 if not self.board.enemies:
@@ -214,7 +239,7 @@ class Game:
             self.board.draw(self.board_surface)
             self.screen.blit(self.board_surface, (0, 50))
 
-            self.gui.draw_gui(self.gui_surface, self.hp)
+            self.gui.draw_gui(self.gui_surface, self.hp, self.money)
             self.screen.blit(self.gui_surface, (0, 0))
 
             if self.menu_open:
@@ -222,6 +247,15 @@ class Game:
 
             if self.gui.translucent_button:
                 self.gui.draw_translucent_button(self.screen)
+
+            to_delete = []
+            for i in range(len(self.tracers)):
+                if self.tracers[i][2] > 0:
+                    pg.draw.line(screen, (0, 0, 0), self.tracers[i][0], self.tracers[i][1])
+                    self.tracers[i][2] -= 1
+                else:
+                    to_delete.append(self.tracers[i])
+            self.tracers = [tracer for tracer in self.tracers if tracer not in to_delete]
 
             if self.hp <= 0:
                 self.game_over()

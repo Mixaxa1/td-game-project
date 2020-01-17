@@ -1,3 +1,4 @@
+import time
 from math import sqrt
 
 import pygame as pg
@@ -13,6 +14,9 @@ class Buildings(pg.sprite.Sprite):
         self.width = tile_width
         self.height = tile_height
 
+        self.time_adjustment = 0
+        self.last_shot_time = 0
+
         self.image = image
         self.image = pg.transform.scale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect().move(self.pos_x, self.pos_y)
@@ -23,7 +27,6 @@ class Towers(Buildings):
         super().__init__(image, pos_x, pos_y, groups, tile_width, tile_height)
 
     def shot(self, enemy):
-        print(1)
         enemy.hp -= self.dmg
 
     def determine_distance(self, enemy):
@@ -37,9 +40,10 @@ class Towers(Buildings):
 
 
 class ArcherTower(Towers):
-    dmg = 1
-    fire_rate = 3
+    dmg = 3
+    reload_time = 0.5
     attack_range = 100
+    cost = 10
 
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
         self.image = load_image('images/ArcherTower.jpg', (50, 50), -1)
@@ -47,9 +51,10 @@ class ArcherTower(Towers):
 
 
 class BallisticTower(Towers):
-    dmg = 5
-    fire_rate = 2
-    attack_range = 200
+    dmg = 7
+    reload_time = 1
+    attack_range = 100
+    cost = 15
 
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
         self.image = load_image('images/BallisticTower.jpg', (50, 50), -1)
@@ -57,9 +62,10 @@ class BallisticTower(Towers):
 
 
 class MagicTower(Towers):
-    dmg = 10
-    fire_rate = 1
-    attack_range = 300
+    dmg = 15
+    reload_time = 1.5
+    attack_range = 100
+    cost = 20
 
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
         self.image = load_image('images/MagicTower.jpg', (50, 50), -1)

@@ -65,6 +65,7 @@ class Goblin(Enemy):
         self.hp = 5
         self.dmg = 1
         self.speed = 2
+        self.reward = 1
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
 
@@ -74,6 +75,7 @@ class Hobgoblin(Enemy):
         self.hp = 15
         self.dmg = 1
         self.speed = 1.75
+        self.reward = 2
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
 
@@ -83,6 +85,7 @@ class Mercenary(Enemy):
         self.hp = 20
         self.dmg = 2
         self.speed = 1.5
+        self.reward = 3
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
 
@@ -92,6 +95,7 @@ class Orc(Enemy):
         self.hp = 45
         self.dmg = 5
         self.speed = 1.25
+        self.reward = 3
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
 
@@ -101,6 +105,7 @@ class Wizard(Enemy):
         self.hp = 70
         self.dmg = 10
         self.speed = 1
+        self.reward = 10
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
 

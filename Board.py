@@ -62,12 +62,8 @@ class Board:
 
     def add_tower(self, tower, cords):
         col, row = cords
-        if self.field[row][col].for_towers and not self.field[row][col].built_up:
-            tower = buildings_factory(tower, cords[0], cords[1], (self.buildings_group,), 50, 50)
-            self.buildings.append(tower)
-            self.field[row][col].built_up = True
-        else:
-            print('Это место уже занято или не пригодно для строительсва башни')
+        self.buildings.append(tower)
+        self.field[row][col].built_up = True
 
     def add_trap(self, trap, cords):
         col, row = cords
@@ -85,6 +81,7 @@ class Board:
 
     def kill_enemy(self, enemy):
         enemy.kill()
+        self.enemies.remove(enemy)
 
     def draw(self, surface):
         self.tiles_group.draw(surface)
