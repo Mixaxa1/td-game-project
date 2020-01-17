@@ -230,11 +230,14 @@ class Game:
             tmp_group.draw(self.screen)
             pg.display.flip()
             clock.tick(50)
-        for event in pg.event.get():
-            if event.type == pg.KEYDOWN:
-                if event.key == pg.K_ENTER:
-                    os.system('restart.py')
-                self.terminate()
+        while 1 == 1:
+            for event in pg.event.get():
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_RETURN:
+                        os.system('restart.py')
+                        self.terminate()
+                    elif event.key == pg.K_ESCAPE:
+                        self.terminate()
 
     def terminate(self):
         pg.quit()
