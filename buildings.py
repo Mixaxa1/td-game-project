@@ -22,8 +22,9 @@ class Towers(Buildings):
     def __init__(self, image, pos_x, pos_y, groups, tile_width, tile_height):
         super().__init__(image, pos_x, pos_y, groups, tile_width, tile_height)
 
-    def shot(self):
-        pass
+    def shot(self, enemy):
+        print(1)
+        enemy.hp -= self.dmg
 
     def determine_distance(self, enemy):
         tower_cords = self.pos_x + 25, self.pos_y + 25
@@ -63,6 +64,17 @@ class MagicTower(Towers):
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
         self.image = load_image('images/MagicTower.jpg', (50, 50), -1)
         super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)
+
+
+class Bullet(pg.sprite.Sprite):
+    def __init__(self, start_pos, target_pos, speed, groups):
+        super().__init__(*groups)
+        self.pos = start_pos
+        self.target_pos = target_pos
+        self.speed = speed
+
+    def update(self, *args):
+        pass
 
 
 def buildings_factory(name, pos_x, pos_y, groups, tile_width, tile_height):

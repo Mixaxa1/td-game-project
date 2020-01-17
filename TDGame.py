@@ -189,8 +189,15 @@ class Game:
                                 self.gui.translucent_button = None
 
             if not self.pause:
+                for tower in self.board.buildings:
+                    for enemy in self.board.enemies:
+                        if tower.determine_distance(enemy) <= tower.attack_range:
+                            tower.shot(enemy)
+
                 for enemy in self.board.enemies:
-                    if not self.on_finish(enemy):
+                    if enemy.hp <= 0:
+                        enemy.kill()
+                    elif not self.on_finish(enemy):
                         enemy.step(self.speed_up)
 
                     else:
