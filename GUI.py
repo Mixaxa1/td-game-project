@@ -8,8 +8,9 @@ class Gui:
         self.system_buttons = [Button('menu', [10, 10], (30, 30), 'images/gear.png'),
                                Button('pause', [60, 10], (30, 30), 'images/continue.png'),
                                Button('speed_up', [110, 10], (30, 30), 'images/speed_up.png')]
-        self.buildings_buttons = [Button('tower1', [210, 10], (30, 30), 'images/tower1.jpg'),
-                                  Button('tower2', [260, 10], (30, 30), 'images/tower2.jpg')]
+        self.buildings_buttons = [Button('ArcherTower', [210, 10], (30, 30), 'images/ArcherTower.jpg'),
+                                  Button('BallisticTower', [260, 10], (30, 30), 'images/BallisticTower.jpg'),
+                                  Button('MagicTower', [310, 10], (30, 30), 'images/MagicTower.jpg')]
         self.menu_buttons = [Button('Продолжить', [175, 100], (150, 50)), Button('Выход', [175, 200], (150, 50))]
         self.translucent_button = None
         self.update_buttons()

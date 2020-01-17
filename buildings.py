@@ -1,3 +1,5 @@
+from math import sqrt
+
 import pygame as pg
 
 from utils import load_image
@@ -20,13 +22,53 @@ class Towers(Buildings):
     def __init__(self, image, pos_x, pos_y, groups, tile_width, tile_height):
         super().__init__(image, pos_x, pos_y, groups, tile_width, tile_height)
 
+    def shot(self):
+        pass
 
-class TowerTest(Towers):
+    def determine_distance(self, enemy):
+        tower_cords = self.pos_x + 25, self.pos_y + 25
+        enemy_cords = enemy.pos_x + 15, enemy.pos_y + 15
+
+        cord_difference = abs(tower_cords[0] - enemy_cords[0]), abs(tower_cords[1] - enemy_cords[1])
+        distance = sqrt(cord_difference[0] ** 2 + cord_difference[1] ** 2)
+
+        return distance
+
+
+class ArcherTower(Towers):
+    dmg = 1
+    fire_rate = 3
+    attack_range = 100
+
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
-        self.image = load_image('images/tower1.jpg', (50, 50), -1)
+        self.image = load_image('images/ArcherTower.jpg', (50, 50), -1)
+        super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)
+
+
+class BallisticTower(Towers):
+    dmg = 5
+    fire_rate = 2
+    attack_range = 200
+
+    def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
+        self.image = load_image('images/BallisticTower.jpg', (50, 50), -1)
+        super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)
+
+
+class MagicTower(Towers):
+    dmg = 10
+    fire_rate = 1
+    attack_range = 300
+
+    def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
+        self.image = load_image('images/MagicTower.jpg', (50, 50), -1)
         super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)
 
 
 def buildings_factory(name, pos_x, pos_y, groups, tile_width, tile_height):
-    if name == "tower1":
-        return TowerTest(pos_x, pos_y, groups, tile_width, tile_height)
+    if name == "ArcherTower":
+        return ArcherTower(pos_x, pos_y, groups, tile_width, tile_height)
+    elif name == "BallisticTower":
+        return BallisticTower(pos_x, pos_y, groups, tile_width, tile_height)
+    elif name == "MagicTower":
+        return MagicTower(pos_x, pos_y, groups, tile_width, tile_height)

@@ -1,7 +1,7 @@
 import pygame as pg
 
 from Tile import GrassTile, SandTile
-from buildings import TowerTest, buildings_factory
+from buildings import buildings_factory, ArcherTower
 from enemies import Goblin, create_wave
 
 
@@ -33,7 +33,7 @@ class Board:
                 #    self.path.append(self.field[row][col])
                 elif field[row][col] == 't1':
                     self.add_grass((col, row))
-                    tower = TowerTest(col, row, (self.buildings_group,), 50, 50)
+                    tower = ArcherTower(col, row, (self.buildings_group,), 50, 50)
                     self.add_tower(tower, [col, row])
 
         self.start = self.field[6][0].pos_x, self.field[6][0].pos_y
