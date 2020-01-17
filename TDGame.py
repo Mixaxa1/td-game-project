@@ -173,13 +173,11 @@ class Game:
             tmp_group.draw(self.screen)
             pg.display.flip()
             clock.tick(50)
-        print('The game is over, would you like to restart?')
-        answer = input().lower().strip()
-        if answer == 'yes':
-            os.system('python restart.py')
-            self.terminate()
-        else:
-            self.terminate()
+        for event in pg.event.get():
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ENTER:
+                    os.system('restart.py')
+                self.terminate()
 
     def terminate(self):
         pg.quit()
