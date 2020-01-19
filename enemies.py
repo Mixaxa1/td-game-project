@@ -131,7 +131,7 @@ def create_wave(difficulty, start, path, groups):
         wave[i] = enemies_factory(wave[i], *start, path, groups)
         wave[i].delay = delay
 
-        delay += 25
+        delay += 35
 
     return wave
 
