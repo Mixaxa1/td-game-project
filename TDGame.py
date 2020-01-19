@@ -39,7 +39,7 @@ class Game:
         self.pause_start = 0
 
         self.hp = 50
-        self.money = 20
+        self.money = 30
         self.difficulty = 1
 
         self.tracers = []

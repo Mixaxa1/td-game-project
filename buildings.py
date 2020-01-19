@@ -45,10 +45,10 @@ class Towers(Buildings):
 
 
 class ArcherTower(Towers):
-    dmg = 3
+    dmg = 5
     reload_time = 0.5
     attack_range = 100
-    cost = 10
+    cost = 15
 
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
         self.image = load_image('images/ArcherTower.jpg', (tile_width, tile_height), -1)
@@ -56,10 +56,10 @@ class ArcherTower(Towers):
 
 
 class BallisticTower(Towers):
-    dmg = 7
+    dmg = 10
     reload_time = 1
-    attack_range = 100
-    cost = 15
+    attack_range = 125
+    cost = 20
 
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
         self.image = load_image('images/BallisticTower.jpg', (tile_width, tile_height), -1)
@@ -67,10 +67,10 @@ class BallisticTower(Towers):
 
 
 class MagicTower(Towers):
-    dmg = 15
+    dmg = 20
     reload_time = 1.5
-    attack_range = 100
-    cost = 20
+    attack_range = 150
+    cost = 25
 
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
         self.image = load_image('images/MagicTower.jpg', (tile_width, tile_height), -1)

@@ -12,7 +12,7 @@ class Gui:
                                   Button('BallisticTower', [260, 3], (30, 30), 'images/BallisticTower.jpg'),
                                   Button('MagicTower', [310, 3], (30, 30), 'images/MagicTower.jpg')]
         self.menu_buttons = [Button('Продолжить', [175, 100], (150, 50)), Button('Выход', [175, 200], (150, 50))]
-        self.prices = [(10, (210, 32)), (15, (260, 32)), (20, (310, 32))]
+        self.prices = [(15, (210, 32)), (20, (260, 32)), (25, (310, 32))]
         self.translucent_button = None
         self.update_buttons()
 

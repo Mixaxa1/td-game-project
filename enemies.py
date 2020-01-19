@@ -64,7 +64,7 @@ class Goblin(Enemy):
         self.image = load_image('images/goblin.png', (30, 30), -1)
         self.hp = 5
         self.dmg = 1
-        self.speed = 2
+        self.speed = 1
         self.reward = 1
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
@@ -74,7 +74,7 @@ class Hobgoblin(Enemy):
         self.image = load_image('images/hobgoblin.png', (30, 30), -1)
         self.hp = 15
         self.dmg = 1
-        self.speed = 1.75
+        self.speed = 0.85
         self.reward = 2
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
@@ -84,7 +84,7 @@ class Mercenary(Enemy):
         self.image = load_image('images/mercenary.png', (30, 30), -1)
         self.hp = 20
         self.dmg = 2
-        self.speed = 1.5
+        self.speed = 0.75
         self.reward = 3
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
@@ -94,7 +94,7 @@ class Orc(Enemy):
         self.image = load_image('images/orc.png', (30, 30), -1)
         self.hp = 45
         self.dmg = 5
-        self.speed = 1.25
+        self.speed = 0.60
         self.reward = 3
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
@@ -104,7 +104,7 @@ class Wizard(Enemy):
         self.image = load_image('images/wizard.png', (30, 30), -1)
         self.hp = 70
         self.dmg = 10
-        self.speed = 1
+        self.speed = 0.55
         self.reward = 10
         super().__init__(self.image, pos_x, pos_y, path, groups)
 
