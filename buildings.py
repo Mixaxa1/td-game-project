@@ -22,6 +22,12 @@ class Buildings(pg.sprite.Sprite):
         self.rect = self.image.get_rect().move(self.pos_x, self.pos_y)
 
 
+class Base(Buildings):
+    def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
+        self.image = load_image('images/base.png', (tile_width, tile_height), -1)
+        super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)
+
+
 class Towers(Buildings):
     def __init__(self, image, pos_x, pos_y, groups, tile_width, tile_height):
         super().__init__(image, pos_x, pos_y, groups, tile_width, tile_height)
@@ -46,7 +52,7 @@ class ArcherTower(Towers):
     cost = 10
 
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
-        self.image = load_image('images/ArcherTower.jpg', (50, 50), -1)
+        self.image = load_image('images/ArcherTower.jpg', (tile_width, tile_height), -1)
         super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)
 
 
@@ -57,7 +63,7 @@ class BallisticTower(Towers):
     cost = 15
 
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
-        self.image = load_image('images/BallisticTower.jpg', (50, 50), -1)
+        self.image = load_image('images/BallisticTower.jpg', (tile_width, tile_height), -1)
         super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)
 
 
@@ -68,19 +74,8 @@ class MagicTower(Towers):
     cost = 20
 
     def __init__(self, pos_x, pos_y, groups, tile_width, tile_height):
-        self.image = load_image('images/MagicTower.jpg', (50, 50), -1)
+        self.image = load_image('images/MagicTower.jpg', (tile_width, tile_height), -1)
         super().__init__(self.image, pos_x, pos_y, groups, tile_width, tile_height)
-
-
-class Bullet(pg.sprite.Sprite):
-    def __init__(self, start_pos, target_pos, speed, groups):
-        super().__init__(*groups)
-        self.pos = start_pos
-        self.target_pos = target_pos
-        self.speed = speed
-
-    def update(self, *args):
-        pass
 
 
 def buildings_factory(name, pos_x, pos_y, groups, tile_width, tile_height):

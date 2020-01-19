@@ -1,7 +1,7 @@
 import pygame as pg
 
 from Tile import GrassTile, SandTile
-from buildings import buildings_factory, ArcherTower
+from buildings import buildings_factory, ArcherTower, Base
 from enemies import Goblin, create_wave
 
 
@@ -15,12 +15,16 @@ class Board:
 
         self.tiles_group = pg.sprite.Group()
         self.buildings_group = pg.sprite.Group()
+        self.towers_group = pg.sprite.Group()
         self.enemies_group = pg.sprite.Group()
 
         self.grass = []
         self.sand = []
         self.enemies = []
         self.buildings = []
+        self.towers = []
+
+        self.base = None
 
         for row in range(len(field)):
             for col in range(len(field[row])):
@@ -30,11 +34,8 @@ class Board:
                     self.add_sand((col, row))
                 elif field[row][col] == 'sb':
                     self.add_sand((col, row))
-                #    self.path.append(self.field[row][col])
-                elif field[row][col] == 't1':
-                    self.add_grass((col, row))
-                    tower = ArcherTower(col, row, (self.buildings_group,), 50, 50)
-                    self.add_tower(tower, [col, row])
+                    base = Base(col, row, (self.buildings_group,), 50, 50)
+                    self.add_base(base, [col, row])
 
         self.start = self.field[6][0].pos_x, self.field[6][0].pos_y
         self.path = [self.field[6][2], self.field[3][2], self.field[3][1], self.field[1][1], self.field[1][4],
@@ -60,18 +61,17 @@ class Board:
         self.field[row][col] = tile
         self.sand.append(tile)
 
+    def add_base(self, base, cords):
+        col, row = cords
+        self.buildings.append(base)
+        self.base = base
+        self.field[row][col].built_up = True
+
     def add_tower(self, tower, cords):
         col, row = cords
         self.buildings.append(tower)
+        self.towers.append(tower)
         self.field[row][col].built_up = True
-
-    def add_trap(self, trap, cords):
-        col, row = cords
-        if self.field[row][col].for_traps and not self.field[row][col].built_up:
-            self.buildings.append(trap)
-            self.field[row][col].built_up = True
-        else:
-            print('Это место уже занято или не пригодно для строительсва ловушки')
 
     def add_enemy(self, enemy):
         self.enemies.append(enemy)

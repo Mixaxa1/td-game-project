@@ -92,13 +92,13 @@ class Game:
 
     def load_level(self):
         field = [['g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g'],
-                 ['g', 'sb', 's', 's', 'sb', 'g', 'g', 'g', 'g', 'g'],
+                 ['g', 's', 's', 's', 's', 'g', 'g', 'g', 'g', 'g'],
                  ['g', 's', 'g', 'g', 's', 'g', 'g', 'g', 'g', 'g'],
-                 ['g', 'sb', 'sb', 'g', 'sb', 'sb', 'g', 'g', 'g', 'g'],
+                 ['g', 's', 's', 'g', 's', 's', 'g', 'g', 'g', 'g'],
                  ['g', 'g', 's', 'g', 'g', 's', 'g', 'g', 'g', 'g'],
-                 ['g', 'g', 's', 'g', 'g', 's', 'g', 'sb', 's', 'sb'],
-                 ['s', 's', 'sb', 'g', 'g', 's', 'g', 's', 'g', 'g'],
-                 ['g', 'g', 'g', 'g', 'g', 'sb', 's', 'sb', 'g', 'g'],
+                 ['g', 'g', 's', 'g', 'g', 's', 'g', 's', 's', 'sb'],
+                 ['s', 's', 's', 'g', 'g', 's', 'g', 's', 'g', 'g'],
+                 ['g', 'g', 'g', 'g', 'g', 's', 's', 's', 'g', 'g'],
                  ['g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g'],
                  ['g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g']]
 
@@ -118,7 +118,7 @@ class Game:
             self.pause = False
             if self.pause_start != 0:
                 pause_end = time.clock()
-                for tower in self.board.buildings:
+                for tower in self.board.towers:
                     tower.time_adjustment = pause_end - self.pause_start
         else:
             self.pause = True
@@ -135,10 +135,8 @@ class Game:
         self.gui.change_speed_increase_image()
 
     def on_finish(self, enemy):
-        # if self.board.base.pos_x + 50 >= enemy.pos_x + 15 >= self.board.base.pos_x and \
-        #         self.board.base.pos_y + 50 >= enemy.pos_x + 15 >= self.board.base.pos_y:
-        # закоментировано до добавления базы
-        if 500 >= enemy.pos_x + 15 >= 450 and 300 >= enemy.pos_y + 15 >= 250:
+        if self.board.base.pos_x + 50 >= enemy.pos_x + 15 >= self.board.base.pos_x and \
+                self.board.base.pos_y + 50 >= enemy.pos_y + 15 >= self.board.base.pos_y:
             return True
         return False
 
@@ -197,6 +195,7 @@ class Game:
                                         and self.money >= tower.cost:
                                     self.money -= tower.cost
                                     self.board.buildings_group.add(tower)
+                                    self.board.towers_group.add(tower)
                                     self.board.add_tower(tower, tile_cords)
 
                                 self.gui.translucent_button = None
@@ -205,7 +204,7 @@ class Game:
                                 self.gui.translucent_button = None
 
             if not self.pause:
-                for tower in self.board.buildings:
+                for tower in self.board.towers:
                     for enemy in self.board.enemies:
                         if tower.determine_distance(enemy) <= tower.attack_range:
                             if time.clock() - tower.last_shot_time - tower.time_adjustment >= tower.reload_time:
@@ -227,6 +226,7 @@ class Game:
                         enemy.step(self.speed_up)
 
                     else:
+                        print(2)
                         self.hp -= enemy.dmg
                         self.board.kill_enemy(enemy)
 
