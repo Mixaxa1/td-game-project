@@ -160,9 +160,9 @@ class Game:
                                     self.pause_continue()
                                 elif btn.name == 'speed_up' and not self.menu_open:
                                     self.speed_up_on_off()
-                                elif btn.name == 'Продолжить':
+                                elif btn.name == 'Продолжить' and self.menu_open:
                                     self.menu_open = False
-                                elif btn.name == 'Выход':
+                                elif btn.name == 'Выход' and self.menu_open:
                                     self.terminate()
 
                     if btn in self.gui.buildings_buttons or btn == self.gui.translucent_button:
@@ -193,6 +193,7 @@ class Game:
                                 tower = buildings_factory(tower, col, row, (), 50, 50)
                                 if self.board.field[row][col].for_towers and not self.board.field[row][col].built_up \
                                         and self.money >= tower.cost:
+                                    print(1)
                                     self.money -= tower.cost
                                     self.board.buildings_group.add(tower)
                                     self.board.towers_group.add(tower)
