@@ -50,24 +50,11 @@ class Game:
 
         self.start_screen()
 
-    def load_image(self, filename='background2.jpg', colorkey=None):
-        filepath = os.path.join(filename)
-        image = pg.image.load(filepath).convert()
-
-        if colorkey is not None:
-            if colorkey == -1:
-                colorkey = image.get_at((0, 0))
-            image.set_colorkey(colorkey)
-        else:
-            image = image.convert_alpha()
-        return image
-
-
     def start_screen(self):
         intro_text = ["                          TOWER DEFENSE", "",
                       "       Нажмите любую клавишу для начала игры"]
 
-        fon = pg.transform.scale(self.load_image('images/background.jpg'), (500, 550))
+        fon = load_image('images/background.jpg', (500, 550))
         screen.blit(fon, (0, 0))
         font = pg.font.Font(None, 30)
         text_coord = 50
@@ -226,7 +213,6 @@ class Game:
                         enemy.step(self.speed_up)
 
                     else:
-                        print(2)
                         self.hp -= enemy.dmg
                         self.board.kill_enemy(enemy)
 

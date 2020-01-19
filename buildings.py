@@ -1,4 +1,3 @@
-import time
 from math import sqrt
 
 import pygame as pg

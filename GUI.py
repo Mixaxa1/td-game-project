@@ -25,8 +25,6 @@ class Gui:
         self.update_buttons()
 
         for btn in self.buttons:
-            if btn.image == True:
-                print(btn)
             image = load_image(btn.image, btn.size, -1)
             surface.blit(image, (btn.cord_x, btn.cord_y))
 
