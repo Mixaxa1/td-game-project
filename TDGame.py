@@ -38,7 +38,7 @@ class Game:
         self.speed_up = 1
         self.pause_start = 0
 
-        self.hp = 50
+        self.hp = 5
         self.money = 30
         self.difficulty = 1
 
@@ -262,11 +262,13 @@ class Game:
             for event in pg.event.get():
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_RETURN:
-                        os.system('restart.py')
+                        game = Game(width, height)
+                        game.start()
+                    elif event.type == pg.QUIT:
                         self.terminate()
                     elif event.key == pg.K_ESCAPE:
                         self.terminate()
-
+                        
     def terminate(self):
         pg.quit()
         sys.exit()
