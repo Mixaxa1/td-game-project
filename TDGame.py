@@ -12,6 +12,7 @@ from buildings import buildings_factory
 pg.init()
 size = width, height = 500, 550
 screen = pg.display.set_mode(size)
+pg.display.set_caption('TDGame', 'game.ico')
 
 
 class GameOver(pg.sprite.Sprite):
